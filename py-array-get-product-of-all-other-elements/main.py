@@ -22,53 +22,52 @@ class GetProductOfAllOtherElements:
         else:
             return num
 
-    def compute_prefix_products(self, nums):
-        # prefix products
-        prefix_products = []
+    def compute_prefix(self, nums):
+        prefix = []
         for num in nums:
-            prefix_products.append(self.compute_element_and_insert(prefix_products, num))
+            prefix.append(self.compute_element_and_insert(prefix, num))
 
-        return prefix_products
+        return prefix
     
-    def compute_suffix_products(self, nums):
+    def compute_posfix(self, nums):
         
-        # suffix products
-        suffix_products = []
+        posfix = []
         for num in reversed(nums):
-            suffix_products.append(self.compute_element_and_insert(suffix_products, num))
+            posfix.append(self.compute_element_and_insert(posfix, num))
         
-        suffix_products = list(reversed(suffix_products))
-        return suffix_products
+        posfix = list(reversed(posfix))
+        return posfix
     
-    def get_element(self, i, prefix_products, suffix_products, nums):
-        if i == 0:
-            return suffix_products[i + 1]
-        elif i == len(nums) - 1:
-            return prefix_products[i - 1]
-        else:
-            return prefix_products[i-1] * suffix_products[i + 1]
+    def get_element(self, i, prefix, posfix, nums):
         
+        if i == 0:
+            return posfix[i + 1]
+        elif i == len(nums) - 1:
+            return prefix[i - 1]
+        else:
+            return prefix[i-1] * posfix[i + 1]
+        
+    
     def is_first_element(self, i):
         return i == 0
     
     def is_last_element(self, i, nums):
         return i == len(nums) - 1
 
-    def compute_product(self, nums):
-
+    def compute_product_array(self, nums):
         if self.is_less_than_two_elements(nums):
             return nums
 
-        prefix_products = self.compute_prefix_products(nums)
-        suffix_products = self.compute_suffix_products(nums)
+        prefix = self.compute_prefix(nums)
+        posfix = self.compute_posfix(nums)
         
         result = []
         for i in range(len(nums)):
             if self.is_first_element(i):
-                result.append(self.get_element(i, prefix_products, suffix_products, nums))
+                result.append(self.get_element(i, prefix, posfix, nums))
             elif self.is_last_element(i, nums):
-                result.append(self.get_element(i, prefix_products, suffix_products, nums))
+                result.append(self.get_element(i, prefix, posfix, nums))
             else:
-                result.append(self.get_element(i, prefix_products, suffix_products, nums))
+                result.append(self.get_element(i, prefix, posfix, nums))
 
         return result

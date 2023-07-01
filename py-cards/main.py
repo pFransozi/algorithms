@@ -1,5 +1,4 @@
 import collections
-from random import choice
 
 # allow access the attributes by names instead of position index.
 Card = collections.namedtuple('Card', ['rank', 'suit'])
@@ -21,3 +20,6 @@ class FrenchDeck:
     # called to implement evaluation of self[key]. gives the support to slicing, iteration, reverse.
     def __getitem__(self, position):
         return self._cards[position]
+    
+    def get_deck(self):
+        return self._cards
